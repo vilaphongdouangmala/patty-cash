@@ -79,7 +79,7 @@ class _ReceiptScreenState extends ConsumerState<ReceiptScreen> {
                           decoration: InputDecoration(
                             labelText: 'receipt_screen.price'.tr(),
                             hintText: '0.00',
-                            prefixText: '\$',
+                            prefixText: '฿',
                           ),
                           keyboardType: const TextInputType.numberWithOptions(
                             decimal: true,
@@ -133,7 +133,7 @@ class _ReceiptScreenState extends ConsumerState<ReceiptScreen> {
                   ),
                 ),
                 Text(
-                  '\$${totalAmount.toStringAsFixed(2)}',
+                  '฿${totalAmount.toStringAsFixed(2)}',
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
@@ -196,13 +196,13 @@ class _ReceiptScreenState extends ConsumerState<ReceiptScreen> {
           ListTile(
             title: Text(item.name),
             subtitle: Text(
-              '${item.participantIds.length} ${'receipt_screen.participants'.tr()} • \$${(item.price / (item.participantIds.isEmpty ? 1 : item.participantIds.length)).toStringAsFixed(2)} ${'receipt_screen.each'.tr()}',
+              '${item.participantIds.length} ${'receipt_screen.participants'.tr()} • ฿${(item.price / (item.participantIds.isEmpty ? 1 : item.participantIds.length)).toStringAsFixed(2)} ${'receipt_screen.each'.tr()}',
             ),
             trailing: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  '\$${item.price.toStringAsFixed(2)}',
+                  '฿${item.price.toStringAsFixed(2)}',
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,

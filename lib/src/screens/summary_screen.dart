@@ -46,7 +46,7 @@ class SummaryScreen extends ConsumerWidget {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        '\$${totalAmount.toStringAsFixed(2)}',
+                        '฿${totalAmount.toStringAsFixed(2)}',
                         style: const TextStyle(
                           fontSize: 28,
                           fontWeight: FontWeight.bold,
@@ -71,7 +71,7 @@ class SummaryScreen extends ConsumerWidget {
             ],
           ),
           const SizedBox(height: 16),
-          // Participant amounts list
+          // Participant amounts list with expandable item breakdown
           Expanded(
             child: ListView.builder(
               itemCount: participants.length,
@@ -79,11 +79,19 @@ class SummaryScreen extends ConsumerWidget {
                 final participant = participants[index];
                 final amountOwed = receiptItemNotifier
                     .calculateTotalForParticipant(participant.id);
-
+                final participantItems = receiptItems
+                    .where(
+                        (item) => item.participantIds.contains(participant.id))
+                    .toList();
                 return Card(
                   margin:
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  child: ListTile(
+                  child: Theme(
+                    data: Theme.of(context).copyWith(
+                      dividerColor: Colors.transparent,
+                    ),
+                    child: ExpansionTile(
+                      initiallyExpanded: true,
                     leading: CircleAvatar(
                       backgroundColor: AppTheme.primaryColor,
                       child: Text(
@@ -104,7 +112,7 @@ class SummaryScreen extends ConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
-                          '\$${amountOwed.toStringAsFixed(2)}',
+                          '฿${amountOwed.toStringAsFixed(2)}',
                           style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -123,118 +131,43 @@ class SummaryScreen extends ConsumerWidget {
                         ),
                       ],
                     ),
+                    children: participantItems.map((item) {
+                      return ListTile(
+                        contentPadding:
+                            const EdgeInsets.symmetric(horizontal: 36),
+                        title: Text(
+                          item.name,
+                          style: const TextStyle(fontSize: 14),
+                        ),
+                        trailing: Text(
+                          '฿${(item.price / item.participantIds.length).toStringAsFixed(2)}',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                        dense: true,
+                      );
+                    }).toList(),
                   ),
+                    ),
                 );
               },
             ),
           ),
 
-          // Action buttons
+          // Action button
           Padding(
             padding: const EdgeInsets.all(16),
-            child: Column(
-              children: [
-                ActionButton(
-                  label: 'summary_screen.view_item_breakdown'.tr(),
-                  icon: Icons.list_alt,
-                  type: ActionButtonType.primary,
-                  onPressed: () => _showItemBreakdown(context, ref),
-                  fullWidth: true,
-                ),
-                const SizedBox(height: 8),
-                ActionButton(
-                  label: 'summary_screen.share_summary'.tr(),
-                  icon: Icons.share,
-                  type: ActionButtonType.outlined,
-                  onPressed: () => _shareSummary(context, ref),
-                  fullWidth: true,
-                ),
-              ],
+            child: ActionButton(
+              label: 'summary_screen.share_summary'.tr(),
+              icon: Icons.share,
+              type: ActionButtonType.primary,
+              onPressed: () => _shareSummary(context, ref),
+              fullWidth: true,
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  /// Shows a dialog with the breakdown of items for each participant
-  void _showItemBreakdown(BuildContext context, WidgetRef ref) {
-    final participants = ref.read(participantNotifierProvider);
-    final receiptItems = ref.read(receiptItemNotifierProvider);
-
-    showDialog(
-      context: context,
-      builder: (context) => Dialog(
-        child: Container(
-          width: double.maxFinite,
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'summary_screen.item_breakdown'.tr(),
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 16),
-              Flexible(
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: participants.length,
-                  itemBuilder: (context, index) {
-                    final participant = participants[index];
-                    final participantItems = receiptItems
-                        .where((item) =>
-                            item.participantIds.contains(participant.id))
-                        .toList();
-
-                    return ExpansionTile(
-                      title: Text(participant.name),
-                      subtitle: Text(
-                        'summary_screen.items_count'.tr(
-                          namedArgs: {'count': '${participantItems.length}'},
-                        ),
-                        style: const TextStyle(
-                          color: AppTheme.lightTextColor,
-                          fontSize: 14,
-                        ),
-                      ),
-                      children: participantItems.map((item) {
-                        return ListTile(
-                          title: Text(
-                            item.name,
-                            style: const TextStyle(
-                              fontSize: 14,
-                            ),
-                          ),
-                          trailing: Text(
-                            '\$${(item.price / item.participantIds.length).toStringAsFixed(2)}',
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                            ),
-                          ),
-                          dense: true,
-                        );
-                      }).toList(),
-                    );
-                  },
-                ),
-              ),
-              const SizedBox(height: 16),
-              Align(
-                alignment: Alignment.centerRight,
-                child: TextButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: Text('dialogs.close'.tr()),
-                ),
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }
@@ -250,7 +183,7 @@ class SummaryScreen extends ConsumerWidget {
     summaryText.writeln('summary_screen.share_header'.tr());
     summaryText.writeln('--------------------------------');
     summaryText.writeln(
-        '${'summary_screen.total_bill'.tr()}: \$${totalAmount.toStringAsFixed(2)}');
+        '${'summary_screen.total_bill'.tr()}: ฿${totalAmount.toStringAsFixed(2)}');
     summaryText.writeln('');
     summaryText.writeln('summary_screen.who_owes_what'.tr());
 
@@ -258,7 +191,7 @@ class SummaryScreen extends ConsumerWidget {
       final amountOwed =
           receiptItemNotifier.calculateTotalForParticipant(participant.id);
       summaryText
-          .writeln('${participant.name}: \$${amountOwed.toStringAsFixed(2)}');
+          .writeln('${participant.name}: ฿${amountOwed.toStringAsFixed(2)}');
     }
 
     // Copy to clipboard
