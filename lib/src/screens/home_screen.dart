@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:patty_cash/src/extensions/context_extensions.dart';
 import 'package:patty_cash/src/providers/participant_provider.dart';
 import 'package:patty_cash/src/providers/receipt_item_provider.dart';
 import 'package:patty_cash/src/screens/participant_screen.dart';
@@ -88,125 +89,113 @@ class HomeScreen extends ConsumerWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            // App logo or icon
-            const Icon(
-              Icons.receipt_long,
-              size: 80,
-              color: AppTheme.primaryColor,
-            ),
-
-            const SizedBox(height: 24),
-
-            // App description
-            const Text(
-              'Split meal costs with friends easily',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-
-            const SizedBox(height: 8),
-
-            const Text(
-              'Add participants, enter receipt items, and see who owes what',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: AppTheme.lightTextColor,
-              ),
-            ),
-
-            const SizedBox(height: 40),
-
-            // Status cards
-            Row(
-              children: [
-                Expanded(
-                  child: StatusCard(
-                    icon: Icons.people,
-                    title: 'home_screen.participants_count'.tr(),
-                    count: participants.length.toString(),
-                  ),
+        child: SingleChildScrollView(
+          physics: const ClampingScrollPhysics(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              // Status cards
+              SizedBox(
+                height: context.contextHeight() * 0.2,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: StatusCard(
+                        icon: Icons.people,
+                        title: 'home_screen.participants_count'.tr(),
+                        items: participants.map((item) => item.name).toList(),
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: StatusCard(
-                    icon: Icons.receipt,
-                    title: 'home_screen.receipt_items_count'.tr(),
-                    count: receiptItems.length.toString(),
-                  ),
+              ),
+
+              const SizedBox(height: 16),
+
+              // Status cards
+              Container(
+                constraints: BoxConstraints(
+                  minHeight: context.contextHeight() * 0.2,
+                  maxHeight: context.contextHeight() * 0.3,
                 ),
-              ],
-            ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: StatusCard(
+                        icon: Icons.receipt_long,
+                        title: 'home_screen.receipt_items_count'.tr(),
+                        items: receiptItems.map((item) => item.name).toList(),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
 
-            const SizedBox(height: 40),
+              const SizedBox(height: 16),
 
-            // Action buttons
-            ActionButton(
-              label: 'home_screen.manage_participants'.tr(),
-              icon: Icons.people,
-              type: ActionButtonType.primary,
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const ParticipantScreen()),
-                );
-              },
-            ),
+              // Action buttons
+              ActionButton(
+                label: 'home_screen.manage_participants'.tr(),
+                icon: Icons.people,
+                type: ActionButtonType.primary,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ParticipantScreen()),
+                  );
+                },
+              ),
 
-            const SizedBox(height: 16),
+              const SizedBox(height: 16),
 
-            ActionButton(
-              label: 'home_screen.manage_receipt_items'.tr(),
-              icon: Icons.receipt_long,
-              type: ActionButtonType.primary,
-              onPressed: () {
-                if (participants.isEmpty) {
-                  _showNoParticipantsDialog(context);
-                  return;
-                }
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const ReceiptScreen()),
-                );
-              },
-            ),
+              ActionButton(
+                label: 'home_screen.manage_receipt_items'.tr(),
+                icon: Icons.receipt_long,
+                type: ActionButtonType.primary,
+                onPressed: () {
+                  if (participants.isEmpty) {
+                    _showNoParticipantsDialog(context);
+                    return;
+                  }
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ReceiptScreen()),
+                  );
+                },
+              ),
 
-            const SizedBox(height: 16),
+              const SizedBox(height: 16),
 
-            ActionButton(
-              label: 'home_screen.view_split_summary'.tr(),
-              icon: Icons.calculate,
-              type: ActionButtonType.secondary,
-              onPressed: () {
-                if (participants.isEmpty || receiptItems.isEmpty) {
-                  _showIncompleteSplitDialog(context);
-                  return;
-                }
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const SummaryScreen()),
-                );
-              },
-            ),
+              ActionButton(
+                label: 'home_screen.view_split_summary'.tr(),
+                icon: Icons.calculate,
+                type: ActionButtonType.secondary,
+                onPressed: () {
+                  if (participants.isEmpty || receiptItems.isEmpty) {
+                    _showIncompleteSplitDialog(context);
+                    return;
+                  }
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const SummaryScreen()),
+                  );
+                },
+              ),
 
-            const SizedBox(height: 32),
+              const SizedBox(height: 32),
 
-            // Reset all button
-            ActionButton(
-              label: 'home_screen.reset_all_data'.tr(),
-              icon: Icons.refresh,
-              type: ActionButtonType.destructive,
-              onPressed: () => _showResetConfirmationDialog(context, ref),
-            ),
-          ],
+              // Reset all button
+              ActionButton(
+                label: 'home_screen.reset_all_data'.tr(),
+                icon: Icons.refresh,
+                type: ActionButtonType.destructive,
+                onPressed: () => _showResetConfirmationDialog(context, ref),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -253,13 +242,15 @@ class HomeScreen extends ConsumerWidget {
         ref.read(participantNotifierProvider.notifier).resetAll();
         ref.read(receiptItemNotifierProvider.notifier).resetAll();
 
-        // Show confirmation
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('notifications.all_data_reset'.tr()),
-            behavior: SnackBarBehavior.floating,
-          ),
-        );
+        if (context.mounted) {
+          // Show confirmation
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('notifications.all_data_reset'.tr()),
+              behavior: SnackBarBehavior.floating,
+            ),
+          );
+        }
       }
     });
   }

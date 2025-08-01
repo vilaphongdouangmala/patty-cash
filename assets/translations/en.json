@@ -1,7 +1,8 @@
 {
   "app_title": "Patty Cash",
   "common": {
-    "done": "Done"
+    "done": "Done",
+    "no_data": "No data"
   },
   "home_screen": {
     "title": "Patty Cash",

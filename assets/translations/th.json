@@ -1,7 +1,8 @@
 {
   "app_title": "แพตตี้แคช",
   "common": {
-    "done": "เสร็จ"
+    "done": "เสร็จ",
+    "no_data": "ไม่มีข้อมูล"
   },
   "home_screen": {
     "title": "แพตตี้แคช",
