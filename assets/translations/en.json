@@ -1,0 +1,78 @@
+{
+  "app_title": "Patty Cash",
+  "home_screen": {
+    "title": "Patty Cash",
+    "participants_count": "Participants",
+    "receipt_items_count": "Receipt Items",
+    "manage_participants": "Manage Participants",
+    "manage_receipt_items": "Manage Receipt Items",
+    "view_split_summary": "View Split Summary",
+    "reset_all_data": "Reset All Data"
+  },
+  "participant_screen": {
+    "title": "Participants",
+    "participant_name": "Participant Name",
+    "enter_name": "Enter name",
+    "please_enter_name": "Please enter a name",
+    "add": "Add",
+    "update": "Update",
+    "no_participants": "No participants yet.\nAdd someone to get started!",
+    "items_selected": "{count} items selected",
+    "delete_participant": "Delete Participant",
+    "delete_participant_confirm": "Are you sure you want to delete {name}?",
+    "cancel": "Cancel",
+    "delete": "Delete"
+  },
+  "receipt_screen": {
+    "title": "Receipt Items",
+    "item_name": "Item Name",
+    "enter_item_name": "Enter item name",
+    "please_enter_item_name": "Please enter an item name",
+    "price": "Price",
+    "required": "Required",
+    "invalid_price": "Invalid price",
+    "add_item": "Add Item",
+    "update_item": "Update Item",
+    "total_amount": "Total Amount:",
+    "participants": "participants",
+    "each": "each",
+    "whos_paying": "Who's paying for this item?",
+    "delete_item": "Delete Item",
+    "delete_item_confirm": "Are you sure you want to delete \"{name}\"?"
+  },
+  "summary_screen": {
+    "title": "Split Summary",
+    "total_bill_amount": "Total Bill Amount",
+    "participants_count": "{count} participants",
+    "items_count": "{count} items",
+    "of_total": "{percent}% of total",
+    "view_item_breakdown": "View Item Breakdown",
+    "share_summary": "Share Summary",
+    "item_breakdown": "Item Breakdown",
+    "close": "Close",
+    "share_header": "PATTY CASH - BILL SPLIT SUMMARY",
+    "total_bill": "Total Bill",
+    "who_owes_what": "WHO OWES WHAT",
+    "copied_to_clipboard": "Summary copied to clipboard"
+  },
+  "dialogs": {
+    "no_participants_title": "No Participants",
+    "no_participants_message": "Please add at least one participant before managing receipt items.",
+    "incomplete_split_title": "Incomplete Data",
+    "incomplete_split_message": "Please add at least one participant and one receipt item before viewing the summary.",
+    "reset_confirmation_title": "Reset All Data",
+    "reset_confirmation_message": "Are you sure you want to reset all data? This will delete all participants and receipt items. This action cannot be undone.",
+    "ok": "OK",
+    "cancel": "Cancel",
+    "reset": "Reset"
+  },
+  "notifications": {
+    "all_data_reset": "All data has been reset",
+    "summary_copied": "Summary copied to clipboard"
+  },
+  "language": {
+    "english": "English",
+    "thai": "Thai",
+    "select_language": "Select Language"
+  }
+}

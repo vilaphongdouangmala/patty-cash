@@ -1,0 +1,78 @@
+{
+  "app_title": "แพตตี้แคช",
+  "home_screen": {
+    "title": "แพตตี้แคช",
+    "participants_count": "ผู้เข้าร่วม",
+    "receipt_items_count": "รายการใบเสร็จ",
+    "manage_participants": "จัดการผู้เข้าร่วม",
+    "manage_receipt_items": "จัดการรายการใบเสร็จ",
+    "view_split_summary": "ดูสรุปการแบ่ง",
+    "reset_all_data": "รีเซ็ตข้อมูลทั้งหมด"
+  },
+  "participant_screen": {
+    "title": "ผู้เข้าร่วม",
+    "participant_name": "ชื่อผู้เข้าร่วม",
+    "enter_name": "ใส่ชื่อ",
+    "please_enter_name": "กรุณาใส่ชื่อ",
+    "add": "เพิ่ม",
+    "update": "อัพเดท",
+    "no_participants": "ยังไม่มีผู้เข้าร่วม\nเพิ่มคนเพื่อเริ่มต้น!",
+    "items_selected": "เลือก {count} รายการ",
+    "delete_participant": "ลบผู้เข้าร่วม",
+    "delete_participant_confirm": "คุณแน่ใจหรือไม่ว่าต้องการลบ {name}?",
+    "cancel": "ยกเลิก",
+    "delete": "ลบ"
+  },
+  "receipt_screen": {
+    "title": "รายการใบเสร็จ",
+    "item_name": "ชื่อรายการ",
+    "enter_item_name": "ใส่ชื่อรายการ",
+    "please_enter_item_name": "กรุณาใส่ชื่อรายการ",
+    "price": "ราคา",
+    "required": "จำเป็น",
+    "invalid_price": "ราคาไม่ถูกต้อง",
+    "add_item": "เพิ่มรายการ",
+    "update_item": "อัพเดทรายการ",
+    "total_amount": "จำนวนเงินทั้งหมด:",
+    "participants": "ผู้เข้าร่วม",
+    "each": "ต่อคน",
+    "whos_paying": "ใครจ่ายสำหรับรายการนี้?",
+    "delete_item": "ลบรายการ",
+    "delete_item_confirm": "คุณแน่ใจหรือไม่ว่าต้องการลบ \"{name}\"?"
+  },
+  "summary_screen": {
+    "title": "สรุปการแบ่ง",
+    "total_bill_amount": "จำนวนเงินทั้งหมด",
+    "participants_count": "{count} ผู้เข้าร่วม",
+    "items_count": "{count} รายการ",
+    "of_total": "{percent}% ของทั้งหมด",
+    "view_item_breakdown": "ดูรายละเอียดรายการ",
+    "share_summary": "แชร์สรุป",
+    "item_breakdown": "รายละเอียดรายการ",
+    "close": "ปิด",
+    "share_header": "แพตตี้แคช - สรุปการแบ่งบิล",
+    "total_bill": "บิลทั้งหมด",
+    "who_owes_what": "ใครเป็นหนี้เท่าไหร่",
+    "copied_to_clipboard": "คัดลอกสรุปไปยังคลิปบอร์ดแล้ว"
+  },
+  "dialogs": {
+    "no_participants_title": "ไม่มีผู้เข้าร่วม",
+    "no_participants_message": "กรุณาเพิ่มผู้เข้าร่วมอย่างน้อยหนึ่งคนก่อนจัดการรายการใบเสร็จ",
+    "incomplete_split_title": "ข้อมูลไม่ครบถ้วน",
+    "incomplete_split_message": "กรุณาเพิ่มผู้เข้าร่วมอย่างน้อยหนึ่งคนและรายการใบเสร็จอย่างน้อยหนึ่งรายการก่อนดูสรุป",
+    "reset_confirmation_title": "รีเซ็ตข้อมูลทั้งหมด",
+    "reset_confirmation_message": "คุณแน่ใจหรือไม่ว่าต้องการรีเซ็ตข้อมูลทั้งหมด? การกระทำนี้จะลบผู้เข้าร่วมและรายการใบเสร็จทั้งหมด และไม่สามารถเรียกคืนได้",
+    "ok": "ตกลง",
+    "cancel": "ยกเลิก",
+    "reset": "รีเซ็ต"
+  },
+  "notifications": {
+    "all_data_reset": "รีเซ็ตข้อมูลทั้งหมดแล้ว",
+    "summary_copied": "คัดลอกสรุปไปยังคลิปบอร์ดแล้ว"
+  },
+  "language": {
+    "english": "อังกฤษ",
+    "thai": "ไทย",
+    "select_language": "เลือกภาษา"
+  }
+}
