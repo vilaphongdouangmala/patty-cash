@@ -6,7 +6,6 @@ import 'package:patty_cash/src/providers/participant_provider.dart';
 import 'package:patty_cash/src/providers/receipt_item_provider.dart';
 import 'package:patty_cash/src/theme/app_theme.dart';
 import 'package:patty_cash/src/widgets/action_button.dart';
-import 'package:patty_cash/src/widgets/app_dialog.dart';
 
 /// Screen for displaying the summary of who owes what
 class SummaryScreen extends ConsumerWidget {
@@ -17,10 +16,10 @@ class SummaryScreen extends ConsumerWidget {
     final participants = ref.watch(participantNotifierProvider);
     final receiptItems = ref.watch(receiptItemNotifierProvider);
     final receiptItemNotifier = ref.read(receiptItemNotifierProvider.notifier);
-    
+
     // Calculate the total amount
     final totalAmount = receiptItemNotifier.calculateTotalAmount();
-    
+
     return Scaffold(
       appBar: AppBar(
         title: Text('summary_screen.title'.tr()),
@@ -30,38 +29,48 @@ class SummaryScreen extends ConsumerWidget {
       body: Column(
         children: [
           // Summary header
-          Container(
-            padding: const EdgeInsets.all(16),
-            color: AppTheme.accentColor,
-            child: Column(
-              children: [
-                Text(
-                  'summary_screen.total_bill_amount'.tr(),
-                  style: const TextStyle(
-                    fontSize: 16,
-                    color: AppTheme.lightTextColor,
+          Row(
+            children: [
+              Expanded(
+                child: Container(
+                  padding: const EdgeInsets.all(16),
+                  color: AppTheme.accentColor,
+                  child: Column(
+                    children: [
+                      Text(
+                        'summary_screen.total_bill_amount'.tr(),
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: AppTheme.lightTextColor,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        '\$${totalAmount.toStringAsFixed(2)}',
+                        style: const TextStyle(
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
+                          color: AppTheme.textColor,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        '${'summary_screen.participants_count'.tr(namedArgs: {
+                              'count': '${participants.length}'
+                            })} • ${'summary_screen.items_count'.tr(namedArgs: {
+                              'count': '${receiptItems.length}'
+                            })}',
+                        style: const TextStyle(
+                          color: AppTheme.lightTextColor,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(height: 4),
-                Text(
-                  '\$${totalAmount.toStringAsFixed(2)}',
-                  style: const TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                    color: AppTheme.textColor,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  '${'summary_screen.participants_count'.tr(args: ['${participants.length}'])} • ${'summary_screen.items_count'.tr(args: ['${receiptItems.length}'])}',
-                  style: const TextStyle(
-                    color: AppTheme.lightTextColor,
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
-          
+          const SizedBox(height: 16),
           // Participant amounts list
           Expanded(
             child: ListView.builder(
@@ -70,9 +79,10 @@ class SummaryScreen extends ConsumerWidget {
                 final participant = participants[index];
                 final amountOwed = receiptItemNotifier
                     .calculateTotalForParticipant(participant.id);
-                
+
                 return Card(
-                  margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   child: ListTile(
                     leading: CircleAvatar(
                       backgroundColor: AppTheme.primaryColor,
@@ -84,7 +94,11 @@ class SummaryScreen extends ConsumerWidget {
                       ),
                     ),
                     title: Text(participant.name),
-                    subtitle: Text('summary_screen.items_count'.tr(args: ['${participant.itemIds.length}'])),
+                    subtitle: Text(
+                      'summary_screen.items_count'.tr(
+                        namedArgs: {'count': '${participant.itemIds.length}'},
+                      ),
+                    ),
                     trailing: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.end,
@@ -98,7 +112,10 @@ class SummaryScreen extends ConsumerWidget {
                           ),
                         ),
                         Text(
-                          'summary_screen.of_total'.tr(args: ['${(amountOwed / totalAmount * 100).toStringAsFixed(1)}']),
+                          'summary_screen.of_total'.tr(namedArgs: {
+                            'percent': ((amountOwed / totalAmount * 100)
+                                .toStringAsFixed(1))
+                          }),
                           style: const TextStyle(
                             fontSize: 12,
                             color: AppTheme.lightTextColor,
@@ -111,7 +128,7 @@ class SummaryScreen extends ConsumerWidget {
               },
             ),
           ),
-          
+
           // Action buttons
           Padding(
             padding: const EdgeInsets.all(16),
@@ -144,13 +161,13 @@ class SummaryScreen extends ConsumerWidget {
   void _showItemBreakdown(BuildContext context, WidgetRef ref) {
     final participants = ref.read(participantNotifierProvider);
     final receiptItems = ref.read(receiptItemNotifierProvider);
-    
+
     showDialog(
       context: context,
       builder: (context) => Dialog(
         child: Container(
           width: double.maxFinite,
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(24),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -170,19 +187,34 @@ class SummaryScreen extends ConsumerWidget {
                   itemBuilder: (context, index) {
                     final participant = participants[index];
                     final participantItems = receiptItems
-                        .where((item) => item.participantIds.contains(participant.id))
+                        .where((item) =>
+                            item.participantIds.contains(participant.id))
                         .toList();
-                    
+
                     return ExpansionTile(
                       title: Text(participant.name),
-                      subtitle: Text('summary_screen.items_count'.tr(args: ['${participantItems.length}'])),
+                      subtitle: Text(
+                        'summary_screen.items_count'.tr(
+                          namedArgs: {'count': '${participantItems.length}'},
+                        ),
+                        style: const TextStyle(
+                          color: AppTheme.lightTextColor,
+                          fontSize: 14,
+                        ),
+                      ),
                       children: participantItems.map((item) {
                         return ListTile(
-                          title: Text(item.name),
+                          title: Text(
+                            item.name,
+                            style: const TextStyle(
+                              fontSize: 14,
+                            ),
+                          ),
                           trailing: Text(
                             '\$${(item.price / item.participantIds.length).toStringAsFixed(2)}',
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
+                              fontSize: 16,
                             ),
                           ),
                           dense: true,
@@ -212,23 +244,26 @@ class SummaryScreen extends ConsumerWidget {
     final participants = ref.read(participantNotifierProvider);
     final receiptItemNotifier = ref.read(receiptItemNotifierProvider.notifier);
     final totalAmount = receiptItemNotifier.calculateTotalAmount();
-    
+
     // Generate summary text
     final StringBuffer summaryText = StringBuffer();
     summaryText.writeln('summary_screen.share_header'.tr());
     summaryText.writeln('--------------------------------');
-    summaryText.writeln('${'summary_screen.total_bill'.tr()}: \$${totalAmount.toStringAsFixed(2)}');
+    summaryText.writeln(
+        '${'summary_screen.total_bill'.tr()}: \$${totalAmount.toStringAsFixed(2)}');
     summaryText.writeln('');
     summaryText.writeln('summary_screen.who_owes_what'.tr());
-    
+
     for (final participant in participants) {
-      final amountOwed = receiptItemNotifier.calculateTotalForParticipant(participant.id);
-      summaryText.writeln('${participant.name}: \$${amountOwed.toStringAsFixed(2)}');
+      final amountOwed =
+          receiptItemNotifier.calculateTotalForParticipant(participant.id);
+      summaryText
+          .writeln('${participant.name}: \$${amountOwed.toStringAsFixed(2)}');
     }
-    
+
     // Copy to clipboard
     Clipboard.setData(ClipboardData(text: summaryText.toString()));
-    
+
     // Show confirmation
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(

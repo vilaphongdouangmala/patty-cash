@@ -20,7 +20,7 @@ class HomeScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final participants = ref.watch(participantNotifierProvider);
     final receiptItems = ref.watch(receiptItemNotifierProvider);
-    
+
     return Scaffold(
       appBar: AppBar(
         title: Text('home_screen.title'.tr()),
@@ -57,7 +57,7 @@ class HomeScreen extends ConsumerWidget {
             ),
             ListTile(
               leading: const Icon(Icons.language),
-              title: Text('Select Language'),
+              title: const Text('Select Language'),
               onTap: () {
                 Navigator.pop(context);
                 showModalBottomSheet(
@@ -97,31 +97,31 @@ class HomeScreen extends ConsumerWidget {
               size: 80,
               color: AppTheme.primaryColor,
             ),
-            
+
             const SizedBox(height: 24),
-            
+
             // App description
-            Text(
+            const Text(
               'Split meal costs with friends easily',
               textAlign: TextAlign.center,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            
+
             const SizedBox(height: 8),
-            
-            Text(
+
+            const Text(
               'Add participants, enter receipt items, and see who owes what',
               textAlign: TextAlign.center,
-              style: const TextStyle(
+              style: TextStyle(
                 color: AppTheme.lightTextColor,
               ),
             ),
-            
+
             const SizedBox(height: 40),
-            
+
             // Status cards
             Row(
               children: [
@@ -142,9 +142,9 @@ class HomeScreen extends ConsumerWidget {
                 ),
               ],
             ),
-            
+
             const SizedBox(height: 40),
-            
+
             // Action buttons
             ActionButton(
               label: 'home_screen.manage_participants'.tr(),
@@ -153,13 +153,14 @@ class HomeScreen extends ConsumerWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const ParticipantScreen()),
+                  MaterialPageRoute(
+                      builder: (context) => const ParticipantScreen()),
                 );
               },
             ),
-            
+
             const SizedBox(height: 16),
-            
+
             ActionButton(
               label: 'home_screen.manage_receipt_items'.tr(),
               icon: Icons.receipt_long,
@@ -171,13 +172,14 @@ class HomeScreen extends ConsumerWidget {
                 }
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const ReceiptScreen()),
+                  MaterialPageRoute(
+                      builder: (context) => const ReceiptScreen()),
                 );
               },
             ),
-            
+
             const SizedBox(height: 16),
-            
+
             ActionButton(
               label: 'home_screen.view_split_summary'.tr(),
               icon: Icons.calculate,
@@ -189,13 +191,14 @@ class HomeScreen extends ConsumerWidget {
                 }
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const SummaryScreen()),
+                  MaterialPageRoute(
+                      builder: (context) => const SummaryScreen()),
                 );
               },
             ),
-            
+
             const SizedBox(height: 32),
-            
+
             // Reset all button
             ActionButton(
               label: 'home_screen.reset_all_data'.tr(),
@@ -234,7 +237,7 @@ class HomeScreen extends ConsumerWidget {
       message: 'dialogs.incomplete_split_message'.tr(),
     );
   }
-  
+
   /// Shows a confirmation dialog before resetting all data
   void _showResetConfirmationDialog(BuildContext context, WidgetRef ref) {
     AppDialog.showConfirmation(
@@ -249,7 +252,7 @@ class HomeScreen extends ConsumerWidget {
         // Reset all data
         ref.read(participantNotifierProvider.notifier).resetAll();
         ref.read(receiptItemNotifierProvider.notifier).resetAll();
-        
+
         // Show confirmation
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

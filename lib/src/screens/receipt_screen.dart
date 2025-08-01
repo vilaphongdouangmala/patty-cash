@@ -33,8 +33,8 @@ class _ReceiptScreenState extends ConsumerState<ReceiptScreen> {
   @override
   Widget build(BuildContext context) {
     final receiptItems = ref.watch(receiptItemNotifierProvider);
-    final totalAmount = ref.read(receiptItemNotifierProvider.notifier)
-        .calculateTotalAmount();
+    final totalAmount =
+        ref.read(receiptItemNotifierProvider.notifier).calculateTotalAmount();
 
     return Scaffold(
       appBar: AppBar(
@@ -64,7 +64,8 @@ class _ReceiptScreenState extends ConsumerState<ReceiptScreen> {
                           ),
                           validator: (value) {
                             if (value == null || value.trim().isEmpty) {
-                              return 'receipt_screen.please_enter_item_name'.tr();
+                              return 'receipt_screen.please_enter_item_name'
+                                  .tr();
                             }
                             return null;
                           },
@@ -104,7 +105,9 @@ class _ReceiptScreenState extends ConsumerState<ReceiptScreen> {
                   ),
                   const SizedBox(height: 16),
                   ActionButton(
-                    label: _editingItemId == null ? 'receipt_screen.add_item'.tr() : 'receipt_screen.update_item'.tr(),
+                    label: _editingItemId == null
+                        ? 'receipt_screen.add_item'.tr()
+                        : 'receipt_screen.update_item'.tr(),
                     icon: _editingItemId == null ? Icons.add : Icons.update,
                     type: ActionButtonType.primary,
                     onPressed: _submitForm,
@@ -162,6 +165,21 @@ class _ReceiptScreenState extends ConsumerState<ReceiptScreen> {
                     },
                   ),
           ),
+          const SizedBox(height: 16),
+          Row(
+            children: [
+              Expanded(
+                child: ActionButton(
+                  label: 'common.done'.tr(),
+                  icon: Icons.check,
+                  type: ActionButtonType.secondary,
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );
@@ -170,7 +188,7 @@ class _ReceiptScreenState extends ConsumerState<ReceiptScreen> {
   /// Builds a card for displaying a receipt item
   Widget _buildReceiptItemCard(ReceiptItem item) {
     final participants = ref.watch(participantNotifierProvider);
-    
+
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Column(
@@ -206,7 +224,7 @@ class _ReceiptScreenState extends ConsumerState<ReceiptScreen> {
               ],
             ),
           ),
-          
+
           // Participant selection
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -225,13 +243,15 @@ class _ReceiptScreenState extends ConsumerState<ReceiptScreen> {
                   spacing: 8,
                   runSpacing: 8,
                   children: participants.map((participant) {
-                    final isSelected = item.participantIds.contains(participant.id);
-                    
+                    final isSelected =
+                        item.participantIds.contains(participant.id);
+
                     return FilterChip(
                       label: Text(participant.name),
                       selected: isSelected,
                       onSelected: (selected) {
-                        _toggleParticipantForItem(item, participant.id, selected);
+                        _toggleParticipantForItem(
+                            item, participant.id, selected);
                       },
                       backgroundColor: Colors.white,
                       selectedColor: AppTheme.primaryColor.withOpacity(0.2),
@@ -257,12 +277,12 @@ class _ReceiptScreenState extends ConsumerState<ReceiptScreen> {
     if (_formKey.currentState!.validate()) {
       final name = _nameController.text.trim();
       final price = double.parse(_priceController.text);
-      
+
       if (_editingItemId != null) {
         // Update existing item
         final itemNotifier = ref.read(receiptItemNotifierProvider.notifier);
         final item = itemNotifier.getItemById(_editingItemId!);
-        
+
         if (item != null) {
           final updatedItem = item.copyWith(
             name: name,
@@ -270,7 +290,7 @@ class _ReceiptScreenState extends ConsumerState<ReceiptScreen> {
           );
           itemNotifier.updateItem(updatedItem);
         }
-        
+
         // Reset editing state
         setState(() {
           _editingItemId = null;
@@ -279,7 +299,7 @@ class _ReceiptScreenState extends ConsumerState<ReceiptScreen> {
         // Add new item
         ref.read(receiptItemNotifierProvider.notifier).addItem(name, price);
       }
-      
+
       // Clear the form
       _nameController.clear();
       _priceController.clear();
@@ -294,7 +314,7 @@ class _ReceiptScreenState extends ConsumerState<ReceiptScreen> {
       _nameController.text = item.name;
       _priceController.text = item.price.toString();
     });
-    
+
     // Focus the text field
     FocusScope.of(context).requestFocus(FocusNode());
   }
@@ -310,8 +330,7 @@ class _ReceiptScreenState extends ConsumerState<ReceiptScreen> {
       confirmColor: Colors.red,
     ).then((confirmed) {
       if (confirmed) {
-        ref.read(receiptItemNotifierProvider.notifier)
-          .removeItem(item.id);
+        ref.read(receiptItemNotifierProvider.notifier).removeItem(item.id);
       }
     });
   }
@@ -324,7 +343,7 @@ class _ReceiptScreenState extends ConsumerState<ReceiptScreen> {
   ) {
     final itemNotifier = ref.read(receiptItemNotifierProvider.notifier);
     final participantNotifier = ref.read(participantNotifierProvider.notifier);
-    
+
     if (selected) {
       // Add participant to item
       itemNotifier.addParticipantToItem(item.id, participantId);

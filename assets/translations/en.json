@@ -1,5 +1,8 @@
 {
   "app_title": "Patty Cash",
+  "common": {
+    "done": "Done"
+  },
   "home_screen": {
     "title": "Patty Cash",
     "participants_count": "Participants",
@@ -64,7 +67,8 @@
     "reset_confirmation_message": "Are you sure you want to reset all data? This will delete all participants and receipt items. This action cannot be undone.",
     "ok": "OK",
     "cancel": "Cancel",
-    "reset": "Reset"
+    "reset": "Reset",
+    "close": "Close"
   },
   "notifications": {
     "all_data_reset": "All data has been reset",

@@ -63,8 +63,12 @@ class _ParticipantScreenState extends ConsumerState<ParticipantScreen> {
                   ),
                   const SizedBox(width: 16),
                   ActionButton(
-                    label: _editingParticipantId == null ? 'participant_screen.add'.tr() : 'participant_screen.update'.tr(),
-                    icon: _editingParticipantId == null ? Icons.add : Icons.update,
+                    label: _editingParticipantId == null
+                        ? 'participant_screen.add'.tr()
+                        : 'participant_screen.update'.tr(),
+                    icon: _editingParticipantId == null
+                        ? Icons.add
+                        : Icons.update,
                     type: ActionButtonType.primary,
                     onPressed: _submitForm,
                   ),
@@ -94,6 +98,21 @@ class _ParticipantScreenState extends ConsumerState<ParticipantScreen> {
                     },
                   ),
           ),
+          const SizedBox(height: 16),
+          Row(
+            children: [
+              Expanded(
+                child: ActionButton(
+                  label: 'common.done'.tr(),
+                  icon: Icons.check,
+                  type: ActionButtonType.secondary,
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );
@@ -107,12 +126,16 @@ class _ParticipantScreenState extends ConsumerState<ParticipantScreen> {
         leading: CircleAvatar(
           backgroundColor: AppTheme.primaryColor,
           child: Text(
-            participant.name.isNotEmpty ? participant.name[0].toUpperCase() : '?',
+            participant.name.isNotEmpty
+                ? participant.name[0].toUpperCase()
+                : '?',
             style: const TextStyle(color: Colors.white),
           ),
         ),
         title: Text(participant.name),
-        subtitle: Text('participant_screen.items_selected'.tr(args: ['${participant.itemIds.length}'])),
+        subtitle: Text('participant_screen.items_selected'.tr(namedArgs: {
+          'count': participant.itemIds.length.toString(),
+        })),
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -138,17 +161,19 @@ class _ParticipantScreenState extends ConsumerState<ParticipantScreen> {
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
       final name = _nameController.text.trim();
-      
+
       if (_editingParticipantId != null) {
         // Update existing participant
-        final participantNotifier = ref.read(participantNotifierProvider.notifier);
-        final participant = participantNotifier.getParticipantById(_editingParticipantId!);
-        
+        final participantNotifier =
+            ref.read(participantNotifierProvider.notifier);
+        final participant =
+            participantNotifier.getParticipantById(_editingParticipantId!);
+
         if (participant != null) {
           final updatedParticipant = participant.copyWith(name: name);
           participantNotifier.updateParticipant(updatedParticipant);
         }
-        
+
         // Reset editing state
         setState(() {
           _editingParticipantId = null;
@@ -157,7 +182,7 @@ class _ParticipantScreenState extends ConsumerState<ParticipantScreen> {
         // Add new participant
         ref.read(participantNotifierProvider.notifier).addParticipant(name);
       }
-      
+
       // Clear the form
       _nameController.clear();
       FocusScope.of(context).unfocus();
@@ -170,7 +195,7 @@ class _ParticipantScreenState extends ConsumerState<ParticipantScreen> {
       _editingParticipantId = participant.id;
       _nameController.text = participant.name;
     });
-    
+
     // Focus the text field
     FocusScope.of(context).requestFocus(FocusNode());
   }
@@ -180,14 +205,16 @@ class _ParticipantScreenState extends ConsumerState<ParticipantScreen> {
     AppDialog.showConfirmation(
       context: context,
       title: 'participant_screen.delete_participant'.tr(),
-      message: 'participant_screen.delete_participant_confirm'.tr(args: [participant.name]),
+      message: 'participant_screen.delete_participant_confirm'
+          .tr(args: [participant.name]),
       cancelText: 'participant_screen.cancel'.tr(),
       confirmText: 'participant_screen.delete'.tr(),
       confirmColor: Colors.red,
     ).then((confirmed) {
       if (confirmed) {
-        ref.read(participantNotifierProvider.notifier)
-          .removeParticipant(participant.id);
+        ref
+            .read(participantNotifierProvider.notifier)
+            .removeParticipant(participant.id);
       }
     });
   }
