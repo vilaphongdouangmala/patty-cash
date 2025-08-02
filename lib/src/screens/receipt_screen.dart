@@ -44,6 +44,53 @@ class _ReceiptScreenState extends ConsumerState<ReceiptScreen> {
       ),
       body: Column(
         children: [
+          // Total amount display
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+            color: AppTheme.accentColor,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'receipt_screen.total_amount'.tr(),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
+                ),
+                Text(
+                  '฿${totalAmount.toStringAsFixed(2)}',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                    color: AppTheme.secondaryColor,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 16),
+          // Receipt items list
+          Expanded(
+            child: receiptItems.isEmpty
+                ? const Center(
+                    child: Text(
+                      'No receipt items yet.\nAdd items to get started!',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: AppTheme.lightTextColor,
+                        fontSize: 16,
+                      ),
+                    ),
+                  )
+                : ListView.builder(
+                    itemCount: receiptItems.length,
+                    itemBuilder: (context, index) {
+                      final item = receiptItems[index];
+                      return _buildReceiptItemCard(item);
+                    },
+                  ),
+          ),
           // Add receipt item form
           Padding(
             padding: const EdgeInsets.all(16.0),
@@ -117,69 +164,24 @@ class _ReceiptScreenState extends ConsumerState<ReceiptScreen> {
               ),
             ),
           ),
-
-          // Total amount display
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            color: AppTheme.accentColor,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  'receipt_screen.total_amount'.tr(),
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),
-                ),
-                Text(
-                  '฿${totalAmount.toStringAsFixed(2)}',
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                    color: AppTheme.secondaryColor,
+                Expanded(
+                  child: ActionButton(
+                    label: 'common.done'.tr(),
+                    icon: Icons.check,
+                    type: ActionButtonType.secondary,
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
                   ),
                 ),
               ],
             ),
           ),
-
-          // Receipt items list
-          Expanded(
-            child: receiptItems.isEmpty
-                ? const Center(
-                    child: Text(
-                      'No receipt items yet.\nAdd items to get started!',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: AppTheme.lightTextColor,
-                        fontSize: 16,
-                      ),
-                    ),
-                  )
-                : ListView.builder(
-                    itemCount: receiptItems.length,
-                    itemBuilder: (context, index) {
-                      final item = receiptItems[index];
-                      return _buildReceiptItemCard(item);
-                    },
-                  ),
-          ),
-          const SizedBox(height: 16),
-          Row(
-            children: [
-              Expanded(
-                child: ActionButton(
-                  label: 'common.done'.tr(),
-                  icon: Icons.check,
-                  type: ActionButtonType.secondary,
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ),
-            ],
-          ),
+          const SizedBox(height: 40),
         ],
       ),
     );

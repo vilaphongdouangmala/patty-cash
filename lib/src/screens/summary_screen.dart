@@ -92,65 +92,65 @@ class SummaryScreen extends ConsumerWidget {
                     ),
                     child: ExpansionTile(
                       initiallyExpanded: true,
-                    leading: CircleAvatar(
-                      backgroundColor: AppTheme.primaryColor,
-                      child: Text(
-                        participant.name.isNotEmpty
-                            ? participant.name[0].toUpperCase()
-                            : '?',
-                        style: const TextStyle(color: Colors.white),
+                      leading: CircleAvatar(
+                        backgroundColor: AppTheme.primaryColor,
+                        child: Text(
+                          participant.name.isNotEmpty
+                              ? participant.name[0].toUpperCase()
+                              : '?',
+                          style: const TextStyle(color: Colors.white),
+                        ),
                       ),
-                    ),
-                    title: Text(participant.name),
-                    subtitle: Text(
-                      'summary_screen.items_count'.tr(
-                        namedArgs: {'count': '${participant.itemIds.length}'},
+                      title: Text(participant.name),
+                      subtitle: Text(
+                        'summary_screen.items_count'.tr(
+                          namedArgs: {'count': '${participant.itemIds.length}'},
+                        ),
                       ),
+                      trailing: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            '฿${amountOwed.toStringAsFixed(2)}',
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: AppTheme.secondaryColor,
+                            ),
+                          ),
+                          Text(
+                            'summary_screen.of_total'.tr(namedArgs: {
+                              'percent': ((amountOwed / totalAmount * 100)
+                                  .toStringAsFixed(1))
+                            }),
+                            style: const TextStyle(
+                              fontSize: 12,
+                              color: AppTheme.lightTextColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                      children: participantItems.map((item) {
+                        return ListTile(
+                          contentPadding:
+                              const EdgeInsets.symmetric(horizontal: 36),
+                          title: Text(
+                            item.name,
+                            style: const TextStyle(fontSize: 14),
+                          ),
+                          trailing: Text(
+                            '฿${(item.price / item.participantIds.length).toStringAsFixed(2)}',
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                            ),
+                          ),
+                          dense: true,
+                        );
+                      }).toList(),
                     ),
-                    trailing: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text(
-                          '฿${amountOwed.toStringAsFixed(2)}',
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: AppTheme.secondaryColor,
-                          ),
-                        ),
-                        Text(
-                          'summary_screen.of_total'.tr(namedArgs: {
-                            'percent': ((amountOwed / totalAmount * 100)
-                                .toStringAsFixed(1))
-                          }),
-                          style: const TextStyle(
-                            fontSize: 12,
-                            color: AppTheme.lightTextColor,
-                          ),
-                        ),
-                      ],
-                    ),
-                    children: participantItems.map((item) {
-                      return ListTile(
-                        contentPadding:
-                            const EdgeInsets.symmetric(horizontal: 36),
-                        title: Text(
-                          item.name,
-                          style: const TextStyle(fontSize: 14),
-                        ),
-                        trailing: Text(
-                          '฿${(item.price / item.participantIds.length).toStringAsFixed(2)}',
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                        ),
-                        dense: true,
-                      );
-                    }).toList(),
                   ),
-                    ),
                 );
               },
             ),

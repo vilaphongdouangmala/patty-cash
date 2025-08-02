@@ -38,7 +38,28 @@ class _ParticipantScreenState extends ConsumerState<ParticipantScreen> {
       ),
       body: Column(
         children: [
-          // Add participant form
+          // Participants list
+          Expanded(
+            child: participants.isEmpty
+                ? Center(
+                    child: Text(
+                      'participant_screen.no_participants'.tr(),
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        color: AppTheme.lightTextColor,
+                        fontSize: 16,
+                      ),
+                    ),
+                  )
+                : ListView.builder(
+                    itemCount: participants.length,
+                    itemBuilder: (context, index) {
+                      final participant = participants[index];
+                      return _buildParticipantCard(participant);
+                    },
+                  ),
+          ),
+          const SizedBox(height: 16),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Form(
@@ -76,43 +97,25 @@ class _ParticipantScreenState extends ConsumerState<ParticipantScreen> {
               ),
             ),
           ),
-
-          // Participants list
-          Expanded(
-            child: participants.isEmpty
-                ? Center(
-                    child: Text(
-                      'participant_screen.no_participants'.tr(),
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        color: AppTheme.lightTextColor,
-                        fontSize: 16,
-                      ),
-                    ),
-                  )
-                : ListView.builder(
-                    itemCount: participants.length,
-                    itemBuilder: (context, index) {
-                      final participant = participants[index];
-                      return _buildParticipantCard(participant);
+          const SizedBox(height: 8),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Row(
+              children: [
+                Expanded(
+                  child: ActionButton(
+                    label: 'common.done'.tr(),
+                    icon: Icons.check,
+                    type: ActionButtonType.secondary,
+                    onPressed: () {
+                      Navigator.pop(context);
                     },
                   ),
-          ),
-          const SizedBox(height: 16),
-          Row(
-            children: [
-              Expanded(
-                child: ActionButton(
-                  label: 'common.done'.tr(),
-                  icon: Icons.check,
-                  type: ActionButtonType.secondary,
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
+          const SizedBox(height: 40),
         ],
       ),
     );
