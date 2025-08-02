@@ -209,7 +209,7 @@ class _ParticipantScreenState extends ConsumerState<ParticipantScreen> {
       context: context,
       title: 'participant_screen.delete_participant'.tr(),
       message: 'participant_screen.delete_participant_confirm'
-          .tr(args: [participant.name]),
+          .tr(namedArgs: {'name': participant.name}),
       cancelText: 'participant_screen.cancel'.tr(),
       confirmText: 'participant_screen.delete'.tr(),
       confirmColor: Colors.red,
