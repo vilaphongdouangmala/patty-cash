@@ -11,7 +11,7 @@ import 'package:patty_cash/src/theme/app_theme.dart';
 import 'package:patty_cash/src/widgets/action_button.dart';
 import 'package:patty_cash/src/widgets/app_dialog.dart';
 import 'package:patty_cash/src/widgets/language_selector.dart';
-import 'package:patty_cash/src/widgets/status_card.dart';
+import 'package:patty_cash/src/widgets/section_box.dart';
 
 /// Home screen for the Patty Cash app
 class HomeScreen extends ConsumerWidget {
@@ -100,7 +100,7 @@ class HomeScreen extends ConsumerWidget {
                 child: Row(
                   children: [
                     Expanded(
-                      child: StatusCard(
+                      child: SectionBox(
                         icon: Icons.people,
                         title: 'home_screen.participants_count'.tr(),
                         items: participants.map((item) => item.name).toList(),
@@ -121,7 +121,7 @@ class HomeScreen extends ConsumerWidget {
                 child: Row(
                   children: [
                     Expanded(
-                      child: StatusCard(
+                      child: SectionBox(
                         icon: Icons.receipt_long,
                         title: 'home_screen.receipt_items_count'.tr(),
                         items: receiptItems.map((item) => item.name).toList(),

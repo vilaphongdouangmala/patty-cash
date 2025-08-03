@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:patty_cash/src/theme/app_theme.dart';
 
 /// A reusable card widget that displays a status with an icon, title, and count
-class StatusCard extends StatelessWidget {
+class SectionBox extends StatelessWidget {
   /// The icon to display in the card
   final IconData icon;
 
@@ -16,7 +16,7 @@ class StatusCard extends StatelessWidget {
   final VoidCallback? onTap;
 
   /// Creates a status card widget
-  const StatusCard({
+  const SectionBox({
     super.key,
     required this.icon,
     required this.title,
