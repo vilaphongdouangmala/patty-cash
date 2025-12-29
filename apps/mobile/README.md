@@ -20,7 +20,7 @@ A Flutter mobile application designed to simplify the process of splitting meal 
 
 ### Prerequisites
 
-- Flutter SDK (version ^3.5.0)
+- Flutter SDK (version ^3.5.0) -- 3.32.8
 - Dart SDK
 
 ### Installation

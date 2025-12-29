@@ -104,6 +104,14 @@ class HomeScreen extends ConsumerWidget {
                         icon: Icons.people,
                         title: 'home_screen.participants_count'.tr(),
                         items: participants.map((item) => item.name).toList(),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ParticipantScreen(),
+                            ),
+                          );
+                        },
                       ),
                     ),
                   ],
@@ -125,6 +133,14 @@ class HomeScreen extends ConsumerWidget {
                         icon: Icons.receipt_long,
                         title: 'home_screen.receipt_items_count'.tr(),
                         items: receiptItems.map((item) => item.name).toList(),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ReceiptScreen(),
+                            ),
+                          );
+                        },
                       ),
                     ),
                   ],
