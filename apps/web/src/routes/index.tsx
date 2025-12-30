@@ -4,7 +4,15 @@ import { Input } from '@/components/ui/input'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { BillSplitingStep } from '@/lib/bill-spliting/enums'
 import { createFileRoute } from '@tanstack/react-router'
-import { Plus, X, Users, AlertCircle, Trash } from 'lucide-react'
+import {
+  Plus,
+  X,
+  Users,
+  AlertCircle,
+  Trash,
+  ReceiptText,
+  Receipt,
+} from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useFieldArray, useForm } from 'react-hook-form'
@@ -97,22 +105,22 @@ function App() {
             <Tabs defaultValue={BillSplitingStep.Participants}>
               <TabsList className="mb-4 w-full">
                 <TabsTrigger
-                  className="w-full"
+                  className="w-full py-4"
                   value={BillSplitingStep.Participants}
                 >
-                  {t('participants.participant')}
+                  <Users />
                 </TabsTrigger>
                 <TabsTrigger
-                  className="w-full"
+                  className="w-full py-4"
                   value={BillSplitingStep.BillItems}
                 >
-                  {t('billItems.items')}
+                  <ReceiptText />
                 </TabsTrigger>
                 <TabsTrigger
-                  className="w-full"
+                  className="w-full py-4"
                   value={BillSplitingStep.Summary}
                 >
-                  {t('summary.summary')}
+                  <Receipt />
                 </TabsTrigger>
               </TabsList>
               <TabsContent value={BillSplitingStep.Participants}>
