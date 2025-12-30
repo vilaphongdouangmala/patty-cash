@@ -7,6 +7,9 @@ dist/
 .env.development.local
 .env.test.local
 .env.production.local
+.nitro
+.tanstack
+.wrangler
 
 # Logs
 npm-debug.log*
