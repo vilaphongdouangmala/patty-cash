@@ -281,11 +281,11 @@ function App() {
                       }
                     >
                       <Plus className="w-4 h-4 mr-2" />
-                      Add Item
+                      {t('billItems.addItem')}
                     </Button>
 
                     <Button type="submit" className="w-full">
-                      Continue to Summary
+                      {t('billItems.goToSummary')}
                     </Button>
                   </form>
                 </Form>

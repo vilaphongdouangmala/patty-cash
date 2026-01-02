@@ -18,6 +18,8 @@ const resources = {
         items: 'Items',
         nameRequired: 'Name is required',
         priceRequired: 'Price is required',
+        goToSummary: 'Go to Summary',
+        addItem: 'Add Item',
       },
       summary: {
         summary: 'Summary',
@@ -40,6 +42,8 @@ const resources = {
         items: 'รายการ',
         nameRequired: 'ชื่อสินค้า/บริการ',
         priceRequired: 'ราคา',
+        goToSummary: 'ไปยังสรุป',
+        addItem: 'เพิ่มรายการ',
       },
       summary: {
         summary: 'สรุป',
