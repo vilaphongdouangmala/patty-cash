@@ -92,7 +92,7 @@ function App() {
       <div className="container mx-auto px-4 py-16">
         <div className="max-w-md mx-auto">
           <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/10 rounded-full mb-4 text-2xl font-boldF">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/10 rounded-full mb-4 text-2xl font-bold">
               1
             </div>
             <div className="flex items-center justify-center gap-4 mb-4">
