@@ -32,9 +32,7 @@ export function ParticipantsStep({
   }
 
   const handleRemoveName = (nameToRemove: string) => {
-    onParticipantsChange(
-      participants.filter((name) => name !== nameToRemove)
-    )
+    onParticipantsChange(participants.filter((name) => name !== nameToRemove))
   }
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -135,6 +133,12 @@ export function ParticipantsStep({
         <div className="text-center py-8 text-muted-foreground">
           <Users className="w-12 h-12 mx-auto mb-3 opacity-50" />
           <p className="text-sm">{t('participants.emptyState')}</p>
+        </div>
+      )}
+
+      {participants.length > 0 && (
+        <div className="py-4 w-full">
+          <Button className="w-full">{t('participants.goToBillItems')}</Button>
         </div>
       )}
     </div>

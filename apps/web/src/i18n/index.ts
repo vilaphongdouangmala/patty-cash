@@ -12,6 +12,7 @@ const resources = {
         clearAll: 'Clear all',
         emptyState: 'Start by adding the first participant',
         duplicateError: 'This participant is already added',
+        goToBillItems: 'Go to Bill Items',
       },
       billItems: {
         title: 'Add Your Items',
@@ -36,6 +37,7 @@ const resources = {
         clearAll: 'ลบทั้งหมด',
         emptyState: 'เริ่มต้นโดยการเพิ่มผู้ร่วมรับประทานคนแรก',
         duplicateError: 'มีผู้ร่วมรับประทานนี้อยู่แล้ว',
+        goToBillItems: 'ไปยังรายการ',
       },
       billItems: {
         title: 'เพิ่มรายการ',

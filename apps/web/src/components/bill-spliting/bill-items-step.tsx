@@ -79,9 +79,12 @@ export function BillItemsStep({ onSubmit }: BillItemsStepProps) {
                         type="number"
                         placeholder="0.00"
                         {...fieldProps}
-                        onChange={(event) =>
-                          fieldProps.onChange(+event.target.value)
-                        }
+                        value={fieldProps.value || ''}
+                        onChange={(event) => {
+                          const value = event.target.value
+                          const numValue = value === '' ? 0 : parseFloat(value)
+                          fieldProps.onChange(numValue)
+                        }}
                       />
                     </FormControl>
                   </FormItem>
@@ -90,7 +93,7 @@ export function BillItemsStep({ onSubmit }: BillItemsStepProps) {
             </div>
 
             <Button type="button" variant="ghost" onClick={() => remove(index)}>
-              <Trash className="text-muted-foreground" />
+              <Trash className="text-muted-foreground hover:text-destructive" />
             </Button>
           </div>
         ))}
